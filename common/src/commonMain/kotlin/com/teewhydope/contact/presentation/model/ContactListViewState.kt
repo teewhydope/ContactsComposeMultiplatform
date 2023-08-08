@@ -5,10 +5,10 @@ import com.teewhydope.architecture.presentation.model.ViewState
 sealed interface ContactListViewState : ViewState {
     data object Loading : ContactListViewState
 
-    data class AllContacts(val contacts: List<ContactPresentationModel> = emptyList()) :
-        ContactListViewState
-
-    data class RecentContacts(val contacts: List<ContactPresentationModel> = emptyList()) :
+    data class Contacts(
+        val allContacts: List<ContactPresentationModel> = emptyList(),
+        val recentContacts: List<ContactPresentationModel> = emptyList(),
+    ) :
         ContactListViewState
 
     data object Empty : ContactListViewState
@@ -18,6 +18,6 @@ sealed interface ContactListViewState : ViewState {
 
 sealed interface ErrorPresentationModel {
     data class Api(val message: String?) : ErrorPresentationModel
-    object RequestTimeout : ErrorPresentationModel
-    object Unknown : ErrorPresentationModel
+    data object RequestTimeout : ErrorPresentationModel
+    data object Unknown : ErrorPresentationModel
 }

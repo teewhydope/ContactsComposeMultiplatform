@@ -11,7 +11,8 @@
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		F7F35D1B2A75C9C500040EC5 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F35D1A2A75C9C500040EC5 /* ComposeView.swift */; };
+		F7337A972A82BA9A00394771 /* SwiftToKotlin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7337A962A82BA9A00394771 /* SwiftToKotlin.swift */; };
+		F7337A992A82CE4200394771 /* ComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7337A982A82CE4200394771 /* ComposeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,7 +35,8 @@
 		7555FF7B242A565900829871 /* contactsIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = contactsIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7F35D1A2A75C9C500040EC5 /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
+		F7337A962A82BA9A00394771 /* SwiftToKotlin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftToKotlin.swift; sourceTree = "<group>"; };
+		F7337A982A82CE4200394771 /* ComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +83,8 @@
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				F7F35D1A2A75C9C500040EC5 /* ComposeView.swift */,
+				F7337A962A82BA9A00394771 /* SwiftToKotlin.swift */,
+				F7337A982A82CE4200394771 /* ComposeView.swift */,
 			);
 			path = contactsIOS;
 			sourceTree = "<group>";
@@ -185,9 +188,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7F35D1B2A75C9C500040EC5 /* ComposeView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				F7337A992A82CE4200394771 /* ComposeView.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				F7337A972A82BA9A00394771 /* SwiftToKotlin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

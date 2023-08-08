@@ -11,8 +11,8 @@ import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.verify
 
 @RunWith(MockitoJUnitRunner::class)
-class DeleteContactUseCaseTest {
-    private lateinit var classUnderTest: DeleteContactUseCase
+class DeleteContactUseCaseImplTest {
+    private lateinit var classUnderTest: DeleteContactUseCaseImpl
 
     @Mock
     lateinit var contactRepository: ContactRepository
@@ -25,7 +25,7 @@ class DeleteContactUseCaseTest {
     @Before
     fun setUp() {
         classUnderTest =
-            DeleteContactUseCase(contactRepository, coroutineContextProvider)
+            DeleteContactUseCaseImpl(contactRepository, coroutineContextProvider)
     }
 
     @Test

@@ -52,6 +52,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation(Deps.Coroutine.core)
                 implementation("org.jetbrains.skiko:skiko:0.7.72")
+                api("moe.tlaster:precompose:1.5.0-beta01")
             }
         }
         val commonTest by getting {

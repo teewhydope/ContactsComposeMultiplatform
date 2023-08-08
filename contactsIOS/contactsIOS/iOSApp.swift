@@ -1,6 +1,7 @@
 import SwiftUI
 import common
 
+
 @main
 struct iOSApp: App {
     
@@ -8,9 +9,15 @@ struct iOSApp: App {
         Graph.init()
     }
     
-	var body: some Scene {
-		WindowGroup {
-			ContentView()
-		}
-	}
+    
+    var body: some Scene {
+        WindowGroup {
+            ZStack {
+                //Color.white.edgesIgnoringSafeArea(.all)
+                ContentView()
+            }.preferredColorScheme(.light)
+        }
+    }
 }
+
+

@@ -8,11 +8,11 @@ import kotlinx.coroutines.withContext
 abstract class ContinuousExecutingUseCase<REQUEST, RESULT> constructor(
     private val coroutineContextProvider: CoroutineContextProvider,
 ) : UseCase<REQUEST, RESULT> {
-    final override suspend fun execute(input: REQUEST, callback: (RESULT) -> Unit) {
+    final override suspend fun execute(input: REQUEST, onResult: (RESULT) -> Unit) {
         withContext(coroutineContextProvider.io) {
             executeInBackground(input) { result ->
                 CoroutineScope(coroutineContextProvider.main).launch {
-                    callback(result)
+                    onResult(result)
                 }
             }
         }
@@ -20,7 +20,7 @@ abstract class ContinuousExecutingUseCase<REQUEST, RESULT> constructor(
 
     abstract suspend fun executeInBackground(
         request: REQUEST,
-        callback: (RESULT) -> Unit,
+        onResult: (RESULT) -> Unit,
     )
 
     open fun cleanup() {}

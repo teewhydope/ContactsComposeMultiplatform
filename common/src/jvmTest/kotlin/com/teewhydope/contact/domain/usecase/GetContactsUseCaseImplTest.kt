@@ -2,7 +2,6 @@ package com.teewhydope.contact.domain.usecase
 
 import com.teewhydope.contact.domain.model.ContactDomainModel
 import com.teewhydope.contact.domain.model.ContactListDomainModel
-import com.teewhydope.contact.domain.model.ContactListDomainModel.RecentContacts
 import com.teewhydope.contact.domain.repository.ContactRepository
 import com.teewhydope.coroutine.CoroutineContextProvider
 import kotlinx.coroutines.flow.flowOf
@@ -16,8 +15,8 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class GetRecentContactsUseCaseTest {
-    private lateinit var classUnderTest: GetRecentContactsUseCase
+class GetContactsUseCaseImplTest {
+    private lateinit var classUnderTest: GetContactsUseCaseImpl
 
     @Mock
     lateinit var contactRepository: ContactRepository
@@ -28,15 +27,25 @@ class GetRecentContactsUseCaseTest {
     @Before
     fun setUp() {
         classUnderTest =
-            GetRecentContactsUseCase(contactRepository, coroutineContextProvider)
+            GetContactsUseCaseImpl(contactRepository, coroutineContextProvider)
     }
 
     @Test
     fun `Given recent contacts when executeInBackground then returns recent contacts`() =
         runBlocking {
             // Given
-            val expectedResult = RecentContacts(
-                contacts = (1..10).map {
+            val expectedResult = ContactListDomainModel(
+                allContacts = (1..10).map {
+                    ContactDomainModel(
+                        id = it.toLong(),
+                        firstName = "First$it",
+                        lastName = "Last$it",
+                        email = "test$it@gmail.com",
+                        phoneNumber = "0801111111$it",
+                        photoBytes = null,
+                    )
+                },
+                recentContacts = (1..10).map {
                     ContactDomainModel(
                         id = it.toLong(),
                         firstName = "First$it",
@@ -48,7 +57,7 @@ class GetRecentContactsUseCaseTest {
                 },
             )
 
-            given(contactRepository.recentContacts(limit = 10)).willReturn(flowOf(expectedResult))
+            given(contactRepository.contacts(limit = 10)).willReturn(flowOf(expectedResult))
 
             // When
             var actualResult: ContactListDomainModel? = null

@@ -1,12 +1,12 @@
 package com.teewhydope.contact.datasource.source.local
 
 import com.teewhydope.contact.datasource.model.ContactDataModel
-import com.teewhydope.contact.datasource.model.ContactListDataModel
 import kotlinx.coroutines.flow.Flow
 
 interface ContactSource {
-    suspend fun allContacts(): Flow<ContactListDataModel>
-    suspend fun recentContacts(limit: Int): Flow<ContactListDataModel>
+    suspend fun allContacts(): Flow<Collection<ContactDataModel>>
+
+    suspend fun recentContacts(limit: Long): Flow<Collection<ContactDataModel>>
     fun insert(contact: ContactDataModel)
     fun delete(id: Long)
 }

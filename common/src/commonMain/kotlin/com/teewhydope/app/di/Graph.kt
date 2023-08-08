@@ -2,20 +2,21 @@ package com.teewhydope.app.di
 
 import com.teewhydope.app.database.DatabaseFactory
 import com.teewhydope.app.database.DriverFactory
+import com.teewhydope.app.navigation.mapper.ContactDetailsDestinationToUiMapper
+import com.teewhydope.app.navigation.mapper.ContactHomeDestinationToUiMapper
 import com.teewhydope.architecture.domain.UseCaseExecutor
-import com.teewhydope.contact.data.mapper.AllContactListDataToDomainResolver
 import com.teewhydope.contact.data.mapper.ContactDataToDomainMapper
 import com.teewhydope.contact.data.mapper.ContactDomainToDataMapper
 import com.teewhydope.contact.data.repository.ContactDataRepository
 import com.teewhydope.contact.datasource.implementation.ContactDataSource
 import com.teewhydope.contact.datasource.implementation.mapper.ContactEntityToDataMapper
 import com.teewhydope.contact.datasource.implementation.mapper.ContactListEntityToDataMapper
-import com.teewhydope.contact.domain.usecase.AddContactUseCase
-import com.teewhydope.contact.domain.usecase.DeleteContactUseCase
-import com.teewhydope.contact.domain.usecase.GetAllContactsUseCase
-import com.teewhydope.contact.domain.usecase.GetRecentContactsUseCase
+import com.teewhydope.contact.domain.usecase.AddContactUseCaseImpl
+import com.teewhydope.contact.domain.usecase.DeleteContactUseCaseImpl
+import com.teewhydope.contact.domain.usecase.GetContactsUseCaseImpl
 import com.teewhydope.contact.presentation.mapper.ContactDomainToPresentationMapper
 import com.teewhydope.contact.presentation.mapper.ContactListDomainToPresentationMapper
+import com.teewhydope.contact.presentation.viewmodel.ContactDetailsViewModel
 import com.teewhydope.contact.presentation.viewmodel.ContactViewModel
 import com.teewhydope.contact.ui.mapper.ContactListPresentationToUiMapper
 import com.teewhydope.contact.ui.mapper.ContactPresentationToUiMapper
@@ -23,6 +24,7 @@ import com.teewhydope.contact.ui.mapper.ContactUiToPresentationMapper
 import com.teewhydope.coroutine.CoroutineContextProvider
 import com.teewhydope.database.ContactDatabase
 import kotlinx.datetime.Clock
+import moe.tlaster.precompose.navigation.Navigator
 
 object Graph {
     fun init() {}
@@ -39,6 +41,16 @@ object Graph {
     private val driverFactory: DriverFactory
         get() = DriverFactory()
 
+    val navHostController by lazy {
+        Navigator()
+    }
+
+    val contactHomeDestinationToUiMapper: ContactHomeDestinationToUiMapper
+        get() = ContactHomeDestinationToUiMapper(navHostController)
+
+    val contactDetailsDestinationToUiMapper: ContactDetailsDestinationToUiMapper
+        get() = ContactDetailsDestinationToUiMapper(navHostController)
+
     val contactDatabase: ContactDatabase by lazy {
         DatabaseFactory(driverFactory = driverFactory).createDatabase()
     }
@@ -53,7 +65,6 @@ object Graph {
     val contactRepository by lazy {
         ContactDataRepository(
             contactSource = contactsSource,
-            allContactListDataToDomainResolver = allContactListDataToDomainResolver,
             contactDomainToDataMapper = contactDomainToDataMapper,
         )
     }
@@ -66,9 +77,6 @@ object Graph {
 
     val contactDataToDomainMapper: ContactDataToDomainMapper
         get() = ContactDataToDomainMapper()
-
-    val allContactListDataToDomainResolver: AllContactListDataToDomainResolver
-        get() = AllContactListDataToDomainResolver(contactDataToDomainMapper)
 
     val contactDomainToDataMapper: ContactDomainToDataMapper
         get() = ContactDomainToDataMapper()
@@ -88,29 +96,22 @@ object Graph {
     val contactListPresentationToUiMapper: ContactListPresentationToUiMapper
         get() = ContactListPresentationToUiMapper(contactPresentationToUiMapper)
 
-    val getAllContactsUseCase by lazy {
-        GetAllContactsUseCase(
-            coroutineContextProvider = coroutineContextProvider,
-            contactRepository = contactRepository,
-        )
-    }
-
-    val getRecentContactsUseCase by lazy {
-        GetRecentContactsUseCase(
+    val getContactsUseCase by lazy {
+        GetContactsUseCaseImpl(
             coroutineContextProvider = coroutineContextProvider,
             contactRepository = contactRepository,
         )
     }
 
     val addContactUseCase by lazy {
-        AddContactUseCase(
+        AddContactUseCaseImpl(
             coroutineContextProvider = coroutineContextProvider,
             contactRepository = contactRepository,
         )
     }
 
     val deleteContactUseCase by lazy {
-        DeleteContactUseCase(
+        DeleteContactUseCaseImpl(
             coroutineContextProvider = coroutineContextProvider,
             contactRepository = contactRepository,
         )
@@ -120,10 +121,14 @@ object Graph {
         ContactViewModel(
             contactListDomainToPresentationMapper = contactListDomainToPresentationMapper,
             useCaseExecutor = useCaseExecutor,
-            getAllContactsUseCase = getAllContactsUseCase,
+            getContactsUseCase = getContactsUseCase,
             deleteContactUseCase = deleteContactUseCase,
             addContactUseCase = addContactUseCase,
 
         )
+    }
+
+    val contactDetailsViewModel by lazy {
+        ContactDetailsViewModel(useCaseExecutor = useCaseExecutor)
     }
 }

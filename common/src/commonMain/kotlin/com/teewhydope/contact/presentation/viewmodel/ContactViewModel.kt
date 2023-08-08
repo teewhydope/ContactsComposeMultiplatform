@@ -5,20 +5,21 @@ import com.teewhydope.architecture.presentation.viewmodel.BaseViewModel
 import com.teewhydope.contact.domain.model.ContactDomainModel
 import com.teewhydope.contact.domain.usecase.AddContactUseCase
 import com.teewhydope.contact.domain.usecase.DeleteContactUseCase
-import com.teewhydope.contact.domain.usecase.GetAllContactsUseCase
+import com.teewhydope.contact.domain.usecase.GetContactsUseCase
 import com.teewhydope.contact.presentation.mapper.ContactListDomainToPresentationMapper
 import com.teewhydope.contact.presentation.model.ContactListNotification
 import com.teewhydope.contact.presentation.model.ContactListViewState
-import com.teewhydope.contact.presentation.model.ContactListViewState.AllContacts
+import com.teewhydope.contact.presentation.model.ContactListViewState.Contacts
 import com.teewhydope.contact.presentation.model.ContactListViewState.Empty
 import com.teewhydope.contact.presentation.model.ContactListViewState.Error
 import com.teewhydope.contact.presentation.model.ContactListViewState.Loading
 import com.teewhydope.contact.presentation.model.ContactPresentationModel
 import com.teewhydope.contact.presentation.model.ErrorPresentationModel.Unknown
+import com.teewhydope.contact.presentation.navigation.EditContactPresentationDestination
 import com.teewhydope.logger
 
 class ContactViewModel(
-    private val getAllContactsUseCase: GetAllContactsUseCase,
+    private val getContactsUseCase: GetContactsUseCase,
     private val addContactUseCase: AddContactUseCase,
     private val deleteContactUseCase: DeleteContactUseCase,
     private val contactListDomainToPresentationMapper: ContactListDomainToPresentationMapper,
@@ -27,19 +28,28 @@ class ContactViewModel(
     override val initialViewState = Loading
 
     fun onEnter() {
-        fetchAllContacts()
+        fetchContacts()
     }
 
-    private fun fetchAllContacts() {
+    private fun fetchContacts() {
         updateViewState(Loading)
-        getAllContactsUseCase.run(
+        getContactsUseCase.run(
+            value = 6,
             onResult = { result ->
                 logger.d { result }
-                val presentationModel =
+                val model =
                     contactListDomainToPresentationMapper.toPresentation(result)
-                when (presentationModel) {
-                    is AllContacts -> updateViewState(AllContacts(presentationModel.contacts))
-                    else -> updateViewState(Empty)
+                when (model) {
+                    is Contacts -> {
+                        updateViewState(
+                            Contacts(
+                                allContacts = model.allContacts,
+                                recentContacts = model.recentContacts,
+                            ),
+                        )
+                    }
+
+                    else -> Empty
                 }
             },
             onException = { exception ->
@@ -64,7 +74,7 @@ class ContactViewModel(
         )
     }
 
-    fun onSelectContact(contact: ContactPresentationModel?, id: Int) {
+    fun onSelectContact(contact: ContactPresentationModel? = null, id: Int) {
         val ids = (id + 1)
         addContactUseCase.run(
             value = ContactDomainModel(
@@ -81,5 +91,9 @@ class ContactViewModel(
                 logger.e { exception }
             },
         )
+    }
+
+    fun onEditContactAction() {
+        navigate(EditContactPresentationDestination)
     }
 }

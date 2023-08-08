@@ -1,15 +1,23 @@
 package com.teewhydope
 
-import androidx.compose.ui.window.ComposeUIViewController
+import com.teewhydope.architecture.ui.navigation.Action
+import moe.tlaster.precompose.PreComposeApplication
 import platform.UIKit.UIScreen
 import platform.UIKit.UIUserInterfaceStyle
+import platform.UIKit.UIViewController
 
-fun mainViewController() = ComposeUIViewController {
+fun MainViewController(): UIViewController {
     val isDarkTheme =
         UIScreen.mainScreen.traitCollection.userInterfaceStyle ==
             UIUserInterfaceStyle.UIUserInterfaceStyleDark
-    App(
-        darkTheme = isDarkTheme,
-        dynamicColor = false,
-    )
+    return PreComposeApplication {
+        App(
+            darkTheme = isDarkTheme,
+            dynamicColor = false,
+        )
+    }
+}
+
+fun onBackGesture() {
+    store.send(Action.OnBackPressed)
 }

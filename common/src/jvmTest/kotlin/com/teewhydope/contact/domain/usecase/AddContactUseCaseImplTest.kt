@@ -12,8 +12,8 @@ import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.verify
 
 @RunWith(MockitoJUnitRunner::class)
-class AddContactUseCaseTest {
-    private lateinit var classUnderTest: AddContactUseCase
+class AddContactUseCaseImplTest {
+    private lateinit var classUnderTest: AddContactUseCaseImpl
 
     @Mock
     lateinit var contactRepository: ContactRepository
@@ -33,7 +33,7 @@ class AddContactUseCaseTest {
     @Before
     fun setUp() {
         classUnderTest =
-            AddContactUseCase(contactRepository, coroutineContextProvider)
+            AddContactUseCaseImpl(contactRepository, coroutineContextProvider)
     }
 
     @Test

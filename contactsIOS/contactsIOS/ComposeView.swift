@@ -2,7 +2,7 @@
 //  ComposeView.swift
 //  contactsIOS
 //
-//  Created by Animasahun Ibrahim on 29/07/2023.
+//  Created by Animasahun Ibrahim on 08/08/2023.
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
@@ -15,6 +15,6 @@ struct ComposeView: UIViewControllerRepresentable {
     }
     
     func makeUIViewController(context: Context) -> some UIViewController {
-        MainViewControllerKt.mainViewController()
+        MainViewControllerKt.MainViewController()
     }
 }

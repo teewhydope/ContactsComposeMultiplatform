@@ -1,0 +1,5 @@
+package com.teewhydope.contact.presentation.navigation
+
+import com.teewhydope.architecture.presentation.navigation.PresentationDestination
+
+object EditContactPresentationDestination : PresentationDestination

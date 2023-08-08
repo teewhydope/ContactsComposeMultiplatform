@@ -5,7 +5,6 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.teewhydope.app.di.Graph
 import com.teewhydope.contact.datasource.implementation.mapper.ContactEntityToDataMapper
 import com.teewhydope.contact.datasource.model.ContactDataModel
-import com.teewhydope.contact.datasource.model.ContactListDataModel
 import com.teewhydope.contact.datasource.model.ContactListDataModel.AllContacts
 import com.teewhydope.contact.datasource.model.ContactListDataModel.RecentContacts
 import com.teewhydope.contact.datasource.source.local.ContactSource
@@ -21,16 +20,16 @@ class ContactDataSource(
 ) : ContactSource {
     private val queries = db.contactQueries
 
-    override suspend fun allContacts(): Flow<ContactListDataModel> =
+    override suspend fun allContacts(): Flow<Collection<ContactDataModel>> =
         queries
             .getContacts().asFlow().mapToList().map { contactEntities ->
-                AllContacts(contactEntities.toContactListDataModel())
+                AllContacts(contactEntities.toContactListDataModel()).contacts
             }
 
-    override suspend fun recentContacts(limit: Int): Flow<ContactListDataModel> =
+    override suspend fun recentContacts(limit: Long): Flow<Collection<ContactDataModel>> =
         queries
-            .getRecentContacts(limit.toLong()).asFlow().mapToList().map { contactEntities ->
-                RecentContacts(contactEntities.toContactListDataModel())
+            .getRecentContacts(limit).asFlow().mapToList().map { contactEntities ->
+                RecentContacts(contactEntities.toContactListDataModel()).contacts
             }
 
     override fun insert(contact: ContactDataModel) {
