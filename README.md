@@ -1,6 +1,6 @@
 # ContactsComposeMultiplatform
 
-This project is inspired by [@EranBoudjnah ](https://github.com/EranBoudjnah)'s book, [Clean Architecture for Android](https://amzn.to/43cUuhb) and readaptation of [ContactsComposeMultiplatform](https://github.com/philipplackner/ContactsComposeMultiplatform) by [philipplackner](https://github.com/philipplackner). It is a Kotlin Multi platform project written entirely (maybe 99.8%) in Kotlin.
+This project is inspired by [@EranBoudjnah ](https://github.com/EranBoudjnah)'s book, [Clean Architecture for Android](https://amzn.to/43cUuhb) and readaptation of [ContactsComposeMultiplatform](https://github.com/philipplackner/ContactsComposeMultiplatform) by [philipplackner](https://github.com/philipplackner). It is a Kotlin Multi platform project written almost entirely in Kotlin.
 
 It demonstrates the key principles presented in the book and how they apply to a real life project.
 I will endeavour to keep this project up to date and use it to demonstrate the strengths of the
@@ -50,6 +50,9 @@ solutions.
 
 - **Dependency Injection Framework**
   Decided to opt-in for Manual Dependency Injection because hilt only supports android for now and i found Koin a little bit complicated to setup and also requires many lines of code than necessary. Refer to ([covpass-android](https://github.com/Digitaler-Impfnachweis/covpass-android)) for a real world complete app using Manual DI
+
+- **Navigation**
+  I used [Precompose](https://github.com/Tlaster/PreCompose). I find it lightweight and easy to use. It is also very similar to jetpack navigation, and it's multiplatform.. 
 
 ### Links
 
