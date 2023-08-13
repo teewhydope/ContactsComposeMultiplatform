@@ -1,0 +1,18 @@
+#!C:/Program\ Files/Git/usr/bin/sh.exe
+
+hash ktlint 2>/dev/null || { echo "ktlint is required but it's not installed. Get it here: https://ktlint.github.io/"; exit 1; }
+
+echo "Running ktlint..."
+
+RESULT_KTLINT=0
+set +o posix
+while read -r fn; do
+  ktlint "${fn}"; OUTPUT=$?; if [[ $OUTPUT -ne 0 ]]; then RESULT_KTLINT=$OUTPUT; fi;
+done < <(git diff --name-only --cached | grep "\.kt")
+
+if [[ $RESULT_KTLINT -ne 0 ]]; then
+  echo "Please fix all above issues before committing your changes."
+  exit 1
+fi
+
+exit 0

@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
     kotlin("android")
 }
 
@@ -10,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.teewhydope.contactscomposemultiplatform.android"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }
@@ -18,7 +17,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -39,12 +38,13 @@ android {
     }
 }
 
+
 dependencies {
     implementation(project(":common"))
-    implementation("androidx.compose.ui:ui:1.4.3")
-    implementation("androidx.compose.ui:ui-tooling:1.4.3")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
-    implementation("androidx.compose.foundation:foundation:1.4.3")
-    implementation("androidx.compose.material:material:1.4.3")
+    implementation("androidx.compose.ui:ui:1.5.0")
+    implementation("androidx.compose.ui:ui-tooling:1.5.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
+    implementation("androidx.compose.foundation:foundation:1.5.0")
+    implementation("androidx.compose.material:material:1.5.0")
     implementation("androidx.activity:activity-compose:1.7.2")
 }

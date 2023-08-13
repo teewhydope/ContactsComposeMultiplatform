@@ -4,7 +4,6 @@ import com.teewhydope.buildsrc.Deps.Mockito.inline
 
 plugins {
     kotlin("multiplatform")
-    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
     id("com.android.library")
     id("com.squareup.sqldelight")
     id("org.jetbrains.compose") version "1.5.0-beta02"
@@ -29,16 +28,12 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "common"
+            binaryOption("bundleId", "com.teewhydope.contactscomposemultiplatform.ios")
         }
     }
 
     sourceSets {
         val commonMain by getting {
-            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
-            tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().all {
-                if (name != "kspCommonMainKotlinMetadata") dependsOn("kspCommonMainKotlinMetadata")
-            }
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -127,6 +122,7 @@ sqldelight {
     }
 }
 
-dependencies {
-    add("kspCommonMainMetadata", "me.tatarka.inject:kotlin-inject-compiler-ksp:0.6.1")
-}
+
+
+
+
