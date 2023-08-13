@@ -2,18 +2,19 @@ package com.teewhydope.contact.presentation.viewmodel
 
 import com.teewhydope.architecture.presentation.BaseViewModelTest
 import com.teewhydope.contact.domain.model.ContactDomainModel
-import com.teewhydope.contact.domain.model.ContactListDomainModel.AllContacts
+import com.teewhydope.contact.domain.model.ContactListDomainModel
 import com.teewhydope.contact.domain.usecase.AddContactUseCase
 import com.teewhydope.contact.domain.usecase.DeleteContactUseCase
-import com.teewhydope.contact.domain.usecase.GetAllContactsUseCase
+import com.teewhydope.contact.domain.usecase.GetContactsUseCaseImpl
 import com.teewhydope.contact.presentation.mapper.ContactListDomainToPresentationMapper
 import com.teewhydope.contact.presentation.model.ContactListNotification
 import com.teewhydope.contact.presentation.model.ContactListViewState
+import com.teewhydope.contact.presentation.model.ContactListViewState.Contacts
 import com.teewhydope.contact.presentation.model.ContactListViewState.Loading
 import com.teewhydope.contact.presentation.model.ContactPresentationModel
 import com.teewhydope.coroutine.currentValue
 import junit.framework.TestCase.assertEquals
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +29,7 @@ class ContactViewModelTest :
     override val expectedInitialState: ContactListViewState = Loading
 
     @Mock
-    private lateinit var getAllContactsUseCase: GetAllContactsUseCase
+    private lateinit var getContactsUseCase: GetContactsUseCaseImpl
 
     @Mock
     private lateinit var addContactUseCase: AddContactUseCase
@@ -42,7 +43,7 @@ class ContactViewModelTest :
     @Before
     fun setUp() {
         classUnderTest = ContactViewModel(
-            getAllContactsUseCase,
+            getContactsUseCase,
             addContactUseCase,
             deleteContactUseCase,
             contactListDomainToPresentationMapper,
@@ -51,10 +52,20 @@ class ContactViewModelTest :
     }
 
     @Test
-    fun `Given contacts when onEnter then presents contacts`() = runBlocking {
+    fun `Given contacts when onEnter then presents contacts`() = runTest {
         // Given
-        val givenContacts = AllContacts(
-            (1..10).map {
+        val givenContacts = ContactListDomainModel(
+            allContacts = (1..3).map {
+                ContactDomainModel(
+                    id = it.toLong(),
+                    firstName = "First$it",
+                    lastName = "Last$it",
+                    email = "test$it@gmail.com",
+                    phoneNumber = "0801111111$it",
+                    photoBytes = null,
+                )
+            },
+            recentContacts = (1..3).map {
                 ContactDomainModel(
                     id = it.toLong(),
                     firstName = "First$it",
@@ -67,11 +78,21 @@ class ContactViewModelTest :
         )
 
         givenSuccessfulUseCaseExecution(
-            getAllContactsUseCase,
+            getContactsUseCase,
             givenContacts,
         )
-        val expectedResult = ContactListViewState.AllContacts(
-            contacts = (1..10).map {
+        val expectedViewState = Contacts(
+            allContacts = (1..3).map {
+                ContactPresentationModel(
+                    id = it.toLong(),
+                    firstName = "First$it",
+                    lastName = "Last$it",
+                    email = "test$it@gmail.com",
+                    phoneNumber = "0801111111$it",
+                    photoBytes = null,
+                )
+            },
+            recentContacts = (1..3).map {
                 ContactPresentationModel(
                     id = it.toLong(),
                     firstName = "First$it",
@@ -83,13 +104,13 @@ class ContactViewModelTest :
             },
         )
         given { contactListDomainToPresentationMapper.toPresentation(givenContacts) }
-            .willReturn(expectedResult)
+            .willReturn(expectedViewState)
 
         // When
         classUnderTest.onEnter()
-        val actualValue = classUnderTest.viewState.currentValue()
 
         // Then
-        assertEquals(expectedResult, actualValue)
+        val actualValue = classUnderTest.viewState.currentValue()
+        assertEquals(expectedViewState, actualValue)
     }
 }

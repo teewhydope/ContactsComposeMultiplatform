@@ -6,8 +6,8 @@ plugins {
     kotlin("multiplatform")
     id("com.google.devtools.ksp") version "1.9.0-1.0.11"
     id("com.android.library")
-    id("org.jetbrains.compose") version "1.5.0-beta01"
     id("com.squareup.sqldelight")
+    id("org.jetbrains.compose") version "1.5.0-beta02"
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -51,7 +51,7 @@ kotlin {
                 implementation("com.squareup.sqldelight:coroutines-extensions:1.5.5")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation(Deps.Coroutine.core)
-                implementation("org.jetbrains.skiko:skiko:0.7.72")
+                implementation("org.jetbrains.skiko:skiko:0.7.76")
                 api("moe.tlaster:precompose:1.5.0-beta01")
             }
         }
@@ -67,6 +67,7 @@ kotlin {
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.7.2")
                 implementation("androidx.startup:startup-runtime:1.1.1")
+                implementation("com.alexstyl:contactstore:1.7.0")
             }
         }
         val androidUnitTest by getting
@@ -94,13 +95,11 @@ kotlin {
 
         val jvmTest by getting {
             dependencies {
-                with(Deps) {
-                    implementation(kotlin("test-junit"))
-                    implementation(core)
-                    implementation(inline)
-                    implementation(Deps.Mockito.kotlin)
-                    implementation(Deps.Coroutine.test)
-                }
+                implementation(kotlin("test-junit"))
+                implementation(core)
+                implementation(inline)
+                implementation(Deps.Mockito.kotlin)
+                implementation(Deps.Coroutine.test)
             }
         }
     }

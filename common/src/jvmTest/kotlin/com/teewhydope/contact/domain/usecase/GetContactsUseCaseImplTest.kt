@@ -57,11 +57,11 @@ class GetContactsUseCaseImplTest {
                 },
             )
 
-            given(contactRepository.contacts(limit = 10)).willReturn(flowOf(expectedResult))
+            given(contactRepository.contacts()).willReturn(flowOf(expectedResult))
 
             // When
             var actualResult: ContactListDomainModel? = null
-            classUnderTest.executeInBackground(request = 10) { recentContacts ->
+            classUnderTest.executeInBackground(request = Unit) { recentContacts ->
                 actualResult = recentContacts
             }
 

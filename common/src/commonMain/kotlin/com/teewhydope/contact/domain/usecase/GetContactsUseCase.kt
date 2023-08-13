@@ -7,15 +7,15 @@ import com.teewhydope.contact.domain.repository.ContactRepository
 import com.teewhydope.coroutine.CoroutineContextProvider
 import kotlinx.coroutines.flow.collectLatest
 
-interface GetContactsUseCase : UseCase<Long, ContactListDomainModel>
+interface GetContactsUseCase : UseCase<Unit, ContactListDomainModel>
 
 class GetContactsUseCaseImpl(
     private val contactRepository: ContactRepository,
     coroutineContextProvider: CoroutineContextProvider,
 ) : GetContactsUseCase,
-    ContinuousExecutingUseCase<Long, ContactListDomainModel>(coroutineContextProvider) {
+    ContinuousExecutingUseCase<Unit, ContactListDomainModel>(coroutineContextProvider) {
     override suspend fun executeInBackground(
-        request: Long,
+        request: Unit,
         onResult: (ContactListDomainModel) -> Unit,
-    ) = contactRepository.contacts(request).collectLatest { onResult(it) }
+    ) = contactRepository.contacts().collectLatest { onResult(it) }
 }

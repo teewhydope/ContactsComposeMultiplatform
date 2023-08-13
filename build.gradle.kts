@@ -9,7 +9,7 @@ buildscript {
 plugins {
     id("com.android.application").version("8.0.2").apply(false)
     id("com.android.library").version("8.0.2").apply(false)
-    id("org.jetbrains.compose").version("1.5.0-beta01").apply(false)
+    id("org.jetbrains.compose").version("1.5.0-beta02").apply(false)
     kotlin("android").version("1.9.0").apply(false)
     kotlin("multiplatform").version("1.9.0").apply(false)
 }

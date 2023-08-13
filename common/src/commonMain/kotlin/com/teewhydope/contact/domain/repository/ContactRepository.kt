@@ -5,7 +5,7 @@ import com.teewhydope.contact.domain.model.ContactListDomainModel
 import kotlinx.coroutines.flow.Flow
 
 interface ContactRepository {
-    suspend fun contacts(limit: Long): Flow<ContactListDomainModel>
+    suspend fun contacts(): Flow<ContactListDomainModel>
 
     fun insert(contact: ContactDomainModel)
 

@@ -3,7 +3,7 @@ package com.teewhydope.contact.datasource.source.local
 import com.teewhydope.contact.datasource.model.ContactDataModel
 import kotlinx.coroutines.flow.Flow
 
-interface ContactSource {
+interface DatabaseContactSource {
     suspend fun allContacts(): Flow<Collection<ContactDataModel>>
 
     suspend fun recentContacts(limit: Long): Flow<Collection<ContactDataModel>>

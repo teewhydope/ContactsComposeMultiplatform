@@ -1,6 +1,7 @@
 package com.teewhydope.app.di
 
 import com.teewhydope.app.database.DatabaseFactory
+import com.teewhydope.app.database.DeviceContacts
 import com.teewhydope.app.database.DriverFactory
 import com.teewhydope.app.navigation.mapper.ContactDetailsDestinationToUiMapper
 import com.teewhydope.app.navigation.mapper.ContactHomeDestinationToUiMapper
@@ -8,9 +9,11 @@ import com.teewhydope.architecture.domain.UseCaseExecutor
 import com.teewhydope.contact.data.mapper.ContactDataToDomainMapper
 import com.teewhydope.contact.data.mapper.ContactDomainToDataMapper
 import com.teewhydope.contact.data.repository.ContactDataRepository
-import com.teewhydope.contact.datasource.implementation.ContactDataSource
+import com.teewhydope.contact.datasource.implementation.DataBaseDataContactSource
+import com.teewhydope.contact.datasource.implementation.DeviceContactDataSource
 import com.teewhydope.contact.datasource.implementation.mapper.ContactEntityToDataMapper
 import com.teewhydope.contact.datasource.implementation.mapper.ContactListEntityToDataMapper
+import com.teewhydope.contact.datasource.implementation.mapper.DeviceContactToDataMapper
 import com.teewhydope.contact.domain.usecase.AddContactUseCaseImpl
 import com.teewhydope.contact.domain.usecase.DeleteContactUseCaseImpl
 import com.teewhydope.contact.domain.usecase.GetContactsUseCaseImpl
@@ -23,11 +26,16 @@ import com.teewhydope.contact.ui.mapper.ContactPresentationToUiMapper
 import com.teewhydope.contact.ui.mapper.ContactUiToPresentationMapper
 import com.teewhydope.coroutine.CoroutineContextProvider
 import com.teewhydope.database.ContactDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import kotlinx.datetime.Clock
 import moe.tlaster.precompose.navigation.Navigator
 
 object Graph {
     fun init() {}
+
+    val coroutineScope: CoroutineScope
+        get() = MainScope()
 
     val coroutineContextProvider: CoroutineContextProvider
         get() = CoroutineContextProvider.Default
@@ -45,6 +53,9 @@ object Graph {
         Navigator()
     }
 
+    val deviceContacts: DeviceContacts
+        get() = DeviceContacts()
+
     val contactHomeDestinationToUiMapper: ContactHomeDestinationToUiMapper
         get() = ContactHomeDestinationToUiMapper(navHostController)
 
@@ -56,21 +67,32 @@ object Graph {
     }
 
     val contactsSource by lazy {
-        ContactDataSource(
+        DataBaseDataContactSource(
             contactEntityToDataMapper = contactEntityToDataMapper,
             db = contactDatabase,
         )
     }
 
+    val deviceContactSource by lazy {
+        DeviceContactDataSource(
+            deviceContactToDataMapper = deviceContactToDataMapper,
+            deviceContacts = deviceContacts,
+        )
+    }
+
     val contactRepository by lazy {
         ContactDataRepository(
-            contactSource = contactsSource,
+            databaseContactSource = contactsSource,
+            deviceContactSource = deviceContactSource,
             contactDomainToDataMapper = contactDomainToDataMapper,
         )
     }
 
     val contactEntityToDataMapper: ContactEntityToDataMapper
         get() = ContactEntityToDataMapper()
+
+    val deviceContactToDataMapper: DeviceContactToDataMapper
+        get() = DeviceContactToDataMapper()
 
     val contactListEntityToDataMapper: ContactListEntityToDataMapper
         get() = ContactListEntityToDataMapper()

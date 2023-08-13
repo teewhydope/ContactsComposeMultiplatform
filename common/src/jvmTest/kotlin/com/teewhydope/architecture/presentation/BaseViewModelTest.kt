@@ -9,7 +9,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert
 import org.junit.Before
@@ -44,7 +44,7 @@ abstract class BaseViewModelTest<
 
     @Suppress("FunctionName")
     @Test
-    fun `Given initial state when instantiated then presents initial state`() = runBlocking {
+    fun `Given initial state when instantiated then presents initial state`() = runTest {
         // When
         val viewState = classUnderTest.viewState.currentValue()
 
@@ -57,7 +57,7 @@ abstract class BaseViewModelTest<
         input: REQUEST,
         domainException: DomainException,
     ) {
-        runBlocking {
+        runTest {
             BDDMockito.willAnswer { invocation ->
                 val onException: (DomainException) -> Unit =
                     invocation.getArgument(ON_EXCEPTION_ARGUMENT_INDEX)

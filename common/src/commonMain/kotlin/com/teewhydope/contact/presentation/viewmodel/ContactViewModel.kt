@@ -34,7 +34,6 @@ class ContactViewModel(
     private fun fetchContacts() {
         updateViewState(Loading)
         getContactsUseCase.run(
-            value = 6,
             onResult = { result ->
                 logger.d { result }
                 val model =

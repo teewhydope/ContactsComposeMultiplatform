@@ -11,7 +11,7 @@ solutions.
 
 ### Features
 
-- [Feature separation](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src/commonMain/kotlin/com/teewhydope/contact)
+- [Feature separation](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src/commonMain/kotlin/com/teewhydope)
 - [Layer separation](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src/commonMain/kotlin/com/teewhydope/contact)
     - UI
     - Presentation

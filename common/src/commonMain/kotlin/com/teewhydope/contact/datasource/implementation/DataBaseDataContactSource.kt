@@ -7,17 +7,17 @@ import com.teewhydope.contact.datasource.implementation.mapper.ContactEntityToDa
 import com.teewhydope.contact.datasource.model.ContactDataModel
 import com.teewhydope.contact.datasource.model.ContactListDataModel.AllContacts
 import com.teewhydope.contact.datasource.model.ContactListDataModel.RecentContacts
-import com.teewhydope.contact.datasource.source.local.ContactSource
+import com.teewhydope.contact.datasource.source.local.DatabaseContactSource
 import com.teewhydope.database.ContactDatabase
 import database.ContactEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class ContactDataSource(
+class DataBaseDataContactSource(
     private val contactEntityToDataMapper: ContactEntityToDataMapper,
     private val currentTime: Long = Graph.currentTime,
     db: ContactDatabase,
-) : ContactSource {
+) : DatabaseContactSource {
     private val queries = db.contactQueries
 
     override suspend fun allContacts(): Flow<Collection<ContactDataModel>> =
