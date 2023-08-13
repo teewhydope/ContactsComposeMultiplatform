@@ -1,13 +1,19 @@
 # ContactsComposeMultiplatform
 
-This project is inspired by [@EranBoudjnah ](https://github.com/EranBoudjnah)'s book, [Clean Architecture for Android](https://amzn.to/43cUuhb) and readaptation of [ContactsComposeMultiplatform](https://github.com/philipplackner/ContactsComposeMultiplatform) by [philipplackner](https://github.com/philipplackner). It is a Kotlin Multi platform project written almost entirely in Kotlin.
+This project is inspired by [@EranBoudjnah ](https://github.com/EranBoudjnah)'s
+book, [Clean Architecture for Android](https://amzn.to/43cUuhb) and readaptation
+of [ContactsComposeMultiplatform](https://github.com/philipplackner/ContactsComposeMultiplatform)
+by [philipplackner](https://github.com/philipplackner). It is a Kotlin Multi platform project
+written almost entirely in Kotlin.
 
 It demonstrates the key principles presented in the book and how they apply to a real life project.
 I will endeavour to keep this project up to date and use it to demonstrate the strengths of the
 architecture: scalability, testability and flexibility when it comes to choosing 3rd party
 solutions.
 
-**[Get Started Here>>>](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src)**
+*
+*[Get Started Here>>>](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src)
+**
 
 ### Features
 
@@ -20,7 +26,8 @@ solutions.
     - Data Source
 - [Unit tests](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src/jvmTest/kotlin/com/teewhydope)
 - End-to-end tests
-- Demonstrates use of [Jetbrain's Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
+- Demonstrates use
+  of [Jetbrain's Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
 - Demonstrates use of [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
   including [Flow](https://kotlinlang.org/docs/flow.html)
 - Demonstrates <abbr title="Model View ViewModel">MVVM</abbr>
@@ -28,11 +35,13 @@ solutions.
 - [Manual DI](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src/commonMain/kotlin/com/teewhydope/app/di)
 - Database [SqlDelight](https://github.com/cashapp/sqldelight)
 - KMP Compose MultiPlatform (Android/Ios)
-- [Shared Viewmodel](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src/commonMain/kotlin/com/teewhydope/architecture/presentation/viewmodel) e.t.c
+- [Shared Viewmodel](https://github.com/teewhydope/ContactsComposeMultiplatform/tree/main/common/src/commonMain/kotlin/com/teewhydope/architecture/presentation/viewmodel)
+  e.t.c
 
 ### Choices
 
 - **Mappers as Classes** vs. **Mapping Extension Functions**
+
   When mapping between models, we have several options. The primary decision is between mapper
   classes and mapping extension functions.
 
@@ -44,15 +53,37 @@ solutions.
 
   And so, I opted for the slightly more verbose concrete mapper classes.
 
+
+- **Skipping Google's [Architecture Components](https://developer.android.com/reference/androidx/lifecycle/package-summary)**
+
+  The greatest issue with Google's Architecture Components is that they leak Android details into
+  the Presentation layer. This prevents the Presentation layer from being truly UI agnostic.
+
+  Another issue with the Architecture Components is that they give too much responsibility to the
+  ViewModel. They make it persist state it does not own, leading to potential data synchronization
+  bugs.
+
+  For these reasons, while still following MVVM, this project relies on Kotlin Flows rather than
+  LiveData, and implements pure ViewModels rather than Google's.
+
+
 - **Mocking Framework**
-  I used [Mockito-Kotlin](https://github.com/mockito/mockito-kotlin). I find the code easier to read and follow when
-  using it. 
+
+  I used [Mockito-Kotlin](https://github.com/mockito/mockito-kotlin). I find the code easier to read
+  and follow when
+  using it.
 
 - **Dependency Injection Framework**
-  Decided to opt-in for Manual Dependency Injection because hilt only supports android for now and i found Koin a little bit complicated to setup and also requires many lines of code than necessary. Refer to ([covpass-android](https://github.com/Digitaler-Impfnachweis/covpass-android)) for a real world complete app using Manual DI
+
+  Decided to opt-in for Manual Dependency Injection because hilt only supports android for now and i
+  found Koin a little bit complicated to setup and also requires many lines of code than necessary.
+  Refer to ([covpass-android](https://github.com/Digitaler-Impfnachweis/covpass-android)) for a real
+  world complete app using Manual DI
 
 - **Navigation**
-  I used [Precompose](https://github.com/Tlaster/PreCompose). I find it lightweight and easy to use. It is also very similar to jetpack navigation, and it's multiplatform.. 
+
+  I used [Precompose](https://github.com/Tlaster/PreCompose). I find it lightweight and easy to use.
+  It is also very similar to jetpack navigation, and it's multiplatform..
 
 ### Links
 
