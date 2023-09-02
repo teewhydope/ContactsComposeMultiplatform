@@ -4,6 +4,7 @@ import com.teewhydope.architecture.ui.navigation.mapper.PresentationToUiMapper
 import com.teewhydope.contact.presentation.model.ContactListViewState
 import com.teewhydope.contact.presentation.model.ContactListViewState.Contacts
 import com.teewhydope.contact.presentation.model.ContactListViewState.Empty
+import com.teewhydope.contact.presentation.model.ContactListViewState.Error
 import com.teewhydope.contact.presentation.model.ContactListViewState.Loading
 import com.teewhydope.contact.ui.model.ContactListUiModel
 
@@ -21,6 +22,8 @@ class ContactListPresentationToUiMapper(
 
             Empty -> ContactListUiModel.Empty
 
-            else -> ContactListUiModel.Error
+            is Error -> ContactListUiModel.Error(
+                error = "unknown error",
+            )
         }
 }

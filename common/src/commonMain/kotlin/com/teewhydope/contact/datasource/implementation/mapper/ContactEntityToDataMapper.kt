@@ -1,7 +1,7 @@
 package com.teewhydope.contact.datasource.implementation.mapper
 
 import com.teewhydope.contact.datasource.model.ContactDataModel
-import database.ContactEntity
+import com.teewhydope.database.ContactEntity
 
 class ContactEntityToDataMapper {
 

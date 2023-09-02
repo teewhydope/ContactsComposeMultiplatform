@@ -1,6 +1,6 @@
 package com.teewhydope.contact.datasource.model
 
-import database.ContactEntity
+import com.teewhydope.database.ContactEntity
 
 sealed interface ContactListEntityModel {
     data class AllContacts(val contacts: Collection<ContactEntity> = emptyList()) :

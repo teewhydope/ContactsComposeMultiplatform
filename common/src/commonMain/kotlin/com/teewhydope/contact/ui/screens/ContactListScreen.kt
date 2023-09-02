@@ -2,12 +2,15 @@ package com.teewhydope.contact.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.teewhydope.app.di.Graph
@@ -17,6 +20,7 @@ import com.teewhydope.contact.presentation.model.ContactListViewState
 import com.teewhydope.contact.ui.model.ContactListUiModel.Empty
 import com.teewhydope.contact.ui.model.ContactListUiModel.Error
 import com.teewhydope.contact.ui.model.ContactListUiModel.Loading
+import com.teewhydope.contact.ui.widgets.CDialog
 import com.teewhydope.contact.ui.widgets.ContactList
 
 @Composable
@@ -27,6 +31,7 @@ fun ContactListScreen() {
 
     val contactListPresentationToUiMapper = Graph.contactListPresentationToUiMapper
     val navigationMapper: ContactHomeDestinationToUiMapper = Graph.contactHomeDestinationToUiMapper
+    val openDialog = remember { mutableStateOf(true) }
 
     LaunchedEffect(key1 = null) {
         viewModel.onEnter()
@@ -65,7 +70,23 @@ fun ContactListScreen() {
             }
 
             is Error -> {
-                Text("Error")
+                if (openDialog.value) {
+                    CDialog(
+                        headline = {
+                            Text(viewStateValue.error)
+                        },
+                        supportingText = {
+                            Text("Please try again later ")
+                        },
+                        onDismissRequest = { openDialog.value = false },
+                        confirmButton = {
+                            Button(
+                                content = { Text("OK") },
+                                onClick = { openDialog.value = false },
+                            )
+                        },
+                    )
+                }
             }
 
             else -> {

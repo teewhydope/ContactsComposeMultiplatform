@@ -11,5 +11,5 @@ sealed interface ContactListUiModel {
 
     data object Empty : ContactListUiModel
 
-    data object Error : ContactListUiModel
+    data class Error(val error: String) : ContactListUiModel
 }

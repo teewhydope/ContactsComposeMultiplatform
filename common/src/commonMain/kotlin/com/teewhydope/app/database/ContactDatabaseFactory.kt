@@ -1,6 +1,6 @@
 package com.teewhydope.app.database
 
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.db.SqlDriver
 import com.teewhydope.database.ContactDatabase
 
 expect class DriverFactory() {

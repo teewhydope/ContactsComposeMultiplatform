@@ -28,9 +28,9 @@ class ContactDataRepository(
                 databaseContactSource.recentContacts(6),
             ) { allContacts, recentContacts ->
                 ContactListDomainModel(
-                    allContacts = allContacts.toContactListDomainModel().sortedBy { it.id },
+                    allContacts = allContacts.toContactListDomainModel().sortedBy { it.firstName },
                     recentContacts = recentContacts.toContactListDomainModel()
-                        .sortedBy { it.id },
+                        .sortedBy { it.firstName },
                 )
             }
         }

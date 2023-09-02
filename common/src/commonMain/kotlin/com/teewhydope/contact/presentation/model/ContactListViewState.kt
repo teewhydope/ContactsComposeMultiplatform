@@ -13,7 +13,8 @@ sealed interface ContactListViewState : ViewState {
 
     data object Empty : ContactListViewState
 
-    data class Error(val error: ErrorPresentationModel) : ContactListViewState
+    data class Error(val error: ErrorPresentationModel) :
+        ContactListViewState
 }
 
 sealed interface ErrorPresentationModel {

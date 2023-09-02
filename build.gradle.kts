@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     dependencies {
-        classpath("com.squareup.sqldelight:gradle-plugin:1.5.5")
+        classpath("app.cash.sqldelight:gradle-plugin:2.1.0-SNAPSHOT")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.23.1")
     }
 }
@@ -11,7 +11,7 @@ buildscript {
 plugins {
     id("com.android.application").version("8.0.2").apply(false)
     id("com.android.library").version("8.0.2").apply(false)
-    id("org.jetbrains.compose").version("1.5.0-beta02").apply(false)
+    id("org.jetbrains.compose").version("1.5.0").apply(false)
     id("org.jlleitschuh.gradle.ktlint").version("11.5.0")
     id("io.gitlab.arturbosch.detekt").version("1.23.1")
     kotlin("android").version("1.9.0").apply(false)
@@ -25,8 +25,8 @@ allprojects {
         google()
         mavenCentral()
         mavenLocal()
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
     }
-
 }
 
 subprojects {
@@ -36,8 +36,6 @@ subprojects {
         }
     }
 }
-
-
 
 tasks.register("installGitHook", Copy::class) {
     var suffix = "macos"

@@ -5,8 +5,8 @@ import com.teewhydope.buildsrc.Deps.Mockito.inline
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.squareup.sqldelight")
-    id("org.jetbrains.compose") version "1.5.0-beta02"
+    id("app.cash.sqldelight")
+    id("org.jetbrains.compose") version "1.5.0"
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -42,36 +42,39 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 api("org.lighthousegames:logging:1.3.0")
-                implementation("com.squareup.sqldelight:runtime:1.5.5")
-                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.5")
+                implementation("app.cash.sqldelight:runtime:2.1.0-SNAPSHOT")
+                implementation("app.cash.sqldelight:coroutines-extensions:2.1.0-SNAPSHOT")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation(Deps.Coroutine.core)
-                implementation("org.jetbrains.skiko:skiko:0.7.76")
-                api("moe.tlaster:precompose:1.5.0-beta01")
+                api("moe.tlaster:precompose:1.5.0")
+                implementation("org.jetbrains.skiko:skiko:0.7.77")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                // implementation("app.cash.sqldelight:sqlite-driver:2.0.0")
             }
         }
 
         val androidMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:android-driver:1.5.5")
+                implementation("app.cash.sqldelight:android-driver:2.1.0-SNAPSHOT")
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.7.2")
                 implementation("androidx.startup:startup-runtime:1.1.1")
                 implementation("com.alexstyl:contactstore:1.7.0")
             }
         }
-        val androidUnitTest by getting
+        val androidUnitTest by getting {
+            dependencies {}
+        }
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
-                implementation("com.squareup.sqldelight:native-driver:1.5.5")
+                implementation("app.cash.sqldelight:native-driver:2.1.0-SNAPSHOT")
             }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
@@ -86,6 +89,12 @@ kotlin {
             iosX64Test.dependsOn(this)
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
+        }
+
+        val jvmMain by getting {
+            dependencies {
+                implementation("app.cash.sqldelight:sqlite-driver:2.1.0-SNAPSHOT")
+            }
         }
 
         val jvmTest by getting {
@@ -116,13 +125,9 @@ android {
 }
 
 sqldelight {
-    database("ContactDatabase") {
-        packageName = "com.teewhydope.database"
-        sourceFolders = listOf("sqldelight")
+    databases {
+        create("ContactDatabase") {
+            packageName.set("com.teewhydope.database")
+        }
     }
 }
-
-
-
-
-

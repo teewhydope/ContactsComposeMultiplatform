@@ -69,6 +69,7 @@ object Graph {
     val contactsSource by lazy {
         DataBaseDataContactSource(
             contactEntityToDataMapper = contactEntityToDataMapper,
+            coroutineContextProvider = coroutineContextProvider,
             db = contactDatabase,
         )
     }
