@@ -1,6 +1,5 @@
 package com.teewhydope.contact.data.repository
 
-import com.teewhydope.app.di.Graph
 import com.teewhydope.contact.data.mapper.ContactDataToDomainMapper
 import com.teewhydope.contact.data.mapper.ContactDomainToDataMapper
 import com.teewhydope.contact.datasource.model.ContactDataModel
@@ -15,8 +14,8 @@ import kotlinx.coroutines.flow.combine
 class ContactDataRepository(
     private val databaseContactSource: DatabaseContactSource,
     private val deviceContactSource: DeviceContactSource,
-    private val contactDataToDomainMapper: ContactDataToDomainMapper = Graph.contactDataToDomainMapper,
-    private val contactDomainToDataMapper: ContactDomainToDataMapper = Graph.contactDomainToDataMapper,
+    private val contactDataToDomainMapper: ContactDataToDomainMapper,
+    private val contactDomainToDataMapper: ContactDomainToDataMapper,
 ) : ContactRepository {
 
     override suspend fun contacts(): Flow<ContactListDomainModel> {

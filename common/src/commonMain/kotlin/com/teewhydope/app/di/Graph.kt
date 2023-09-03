@@ -71,6 +71,7 @@ object Graph {
             contactEntityToDataMapper = contactEntityToDataMapper,
             coroutineContextProvider = coroutineContextProvider,
             db = contactDatabase,
+            currentTime = currentTime,
         )
     }
 
@@ -86,6 +87,7 @@ object Graph {
             databaseContactSource = contactsSource,
             deviceContactSource = deviceContactSource,
             contactDomainToDataMapper = contactDomainToDataMapper,
+            contactDataToDomainMapper = contactDataToDomainMapper,
         )
     }
 

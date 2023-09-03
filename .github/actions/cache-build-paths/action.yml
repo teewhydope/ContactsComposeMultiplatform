@@ -1,0 +1,20 @@
+name: 'Cache Build'
+description: 'Cache build paths'
+inputs:
+  key:
+    description: 'Cache key'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache build artifacts
+      uses: actions/cache@v2
+      with:
+        path: |
+          build
+          buildSrc/build
+          common/build
+          contactsAndroid/build
+        key: ${{ inputs.key }}
+        restore-keys: |
+          ${{ inputs.key }}

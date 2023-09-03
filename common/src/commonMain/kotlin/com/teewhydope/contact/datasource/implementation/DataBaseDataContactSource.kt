@@ -2,7 +2,6 @@ package com.teewhydope.contact.datasource.implementation
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.teewhydope.app.di.Graph
 import com.teewhydope.contact.datasource.implementation.mapper.ContactEntityToDataMapper
 import com.teewhydope.contact.datasource.model.ContactDataModel
 import com.teewhydope.contact.datasource.model.ContactListDataModel.AllContacts
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.map
 
 class DataBaseDataContactSource(
     private val contactEntityToDataMapper: ContactEntityToDataMapper,
-    private val currentTime: Long = Graph.currentTime,
+    private val currentTime: Long,
     private val coroutineContextProvider: CoroutineContextProvider,
     db: ContactDatabase,
 ) : DatabaseContactSource {
